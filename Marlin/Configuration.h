@@ -1484,13 +1484,13 @@
 
 // Most probes should stay away from the edges of the bed, but
 // with NOZZLE_AS_PROBE this can be negative for a wider probing area.
-#define PROBING_MARGIN 10
+#define PROBING_MARGIN 10 //da: default: 10
 
 // X and Y axis travel speed (mm/min) between probes
-#define XY_PROBE_FEEDRATE (133*60)
+#define XY_PROBE_FEEDRATE (140*60) //da: bltouch default: 133*60
 
 // Feedrate (mm/min) for the first approach when double-probing (MULTIPLE_PROBING == 2)
-#define Z_PROBE_FEEDRATE_FAST (4*60)
+#define Z_PROBE_FEEDRATE_FAST (10*60) //da: bltouch default: 4*60
 
 // Feedrate (mm/min) for the "accurate" probe of each point
 #define Z_PROBE_FEEDRATE_SLOW (Z_PROBE_FEEDRATE_FAST / 2)
@@ -1558,7 +1558,7 @@
  *     But: `M851 Z+1` with a CLEARANCE of 2  =>  2mm from bed to nozzle.
  */
 #define Z_CLEARANCE_DEPLOY_PROBE   10 // Z Clearance for Deploy/Stow
-#define Z_CLEARANCE_BETWEEN_PROBES  5 // Z Clearance between probe points
+#define Z_CLEARANCE_BETWEEN_PROBES  3 // Z Clearance between probe points //da: bltouch default: 5
 #define Z_CLEARANCE_MULTI_PROBE     5 // Z Clearance between multiple probes
 //#define Z_AFTER_PROBING           5 // Z position after probing is done
 
@@ -1946,7 +1946,7 @@
 #if EITHER(AUTO_BED_LEVELING_LINEAR, AUTO_BED_LEVELING_BILINEAR)
 
   // Set the number of grid points per dimension.
-  #define GRID_MAX_POINTS_X 3
+  #define GRID_MAX_POINTS_X 4 // da: bltouch default: 3
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   // Probe along the Y axis, advancing X after each column
@@ -2066,8 +2066,8 @@
 
 // Manually set the home position. Leave these undefined for automatic settings.
 // For DELTA this is the top-center of the Cartesian print volume.
-#define MANUAL_X_HOME_POS -10 //da: BLTouch (default: off 0)
-#define MANUAL_Y_HOME_POS -4 //da: BLTouch (default: off 0)
+//#define MANUAL_X_HOME_POS 0 
+//#define MANUAL_Y_HOME_POS 0 
 //#define MANUAL_Z_HOME_POS 0
 //#define MANUAL_I_HOME_POS 0
 //#define MANUAL_J_HOME_POS 0
@@ -2091,7 +2091,7 @@
 #endif
 
 // Homing speeds (linear=mm/min, rotational=°/min)
-#define HOMING_FEEDRATE_MM_M { (50*60), (50*60), (4*60) }
+#define HOMING_FEEDRATE_MM_M { (140*60), (140*60), (10*60) } // da: default: (50*60), (50*60), (4*60)
 
 // Validate that endstops are triggered on homing moves
 #define VALIDATE_HOMING_ENDSTOPS
@@ -3259,13 +3259,15 @@
  *
  * LED Type. Enable only one of the following two options.
  */
-#define RGB_LED // da: need configuration
+//#define RGB_LED // da: need configuration
 //#define RGBW_LED
 
+//da: if required led could be added again (Plug must be installed on mainboard). 
+// RGB pins have to be determinated before connecting
 #if EITHER(RGB_LED, RGBW_LED)
-  //#define RGB_LED_R_PIN 5
-  //#define RGB_LED_G_PIN 4
-  //#define RGB_LED_B_PIN 6
+  #define RGB_LED_R_PIN LED_PIN 
+  #define RGB_LED_G_PIN LED2_PIN
+  #define RGB_LED_B_PIN LED3_PIN
   //#define RGB_LED_W_PIN -1
 #endif
 
